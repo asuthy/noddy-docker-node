@@ -29,7 +29,7 @@ docker logs noddy
 ```console
 docker exec -it noddy bash
 ```
-####S top the container
+#### Stop the container
 ```console
 docker stop noddy
 ```
