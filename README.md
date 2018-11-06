@@ -35,5 +35,5 @@ docker stop noddy
 ```
 #### Remove the container
 ```console
-docker logs noddy
+docker rm noddy
 ```
