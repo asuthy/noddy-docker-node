@@ -1,0 +1,24 @@
+{
+  "name": "noddy",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "nodemon --inspect=0.0.0.0:9229 src/app.js",
+    "lint": "node_modules/standard/bin/cmd.js --fix --no-verify --verbose | snazzy",
+    "lint-check": "node_modules/standard/bin/cmd.js --no-verify --verbose"
+  },
+  "repository": "",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^12.0.1"
+  },
+  "dependencies": {
+    "knex": "^0.13.0",
+    "pg": "^6.3.0"
+  }
+}
