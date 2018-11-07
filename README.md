@@ -10,7 +10,7 @@ docker build -t noddy:0.0.1 .
 ```
 #### Run container with link to postgres-10 container (available internally as postgres)
 ```console
-docker run --name noddy -p 9229:9229 -p 3000:3000 --link postgres-10:postgres -d -v ${PWD}:/home/node/app noddy:0.0.1
+docker run --name noddy -p 9229:9229 -p 3000:3000 --link postgres-10:postgres -d -v ${PWD}:/usr/src/app noddy:0.0.1
 ```
 #### Attach VS Code debugger from debug menu
 ```console

@@ -41,5 +41,5 @@ async function processRequest (publication, start, end) {
 
   const publicationResult = await knexDb.raw(`select * from publication where LOWER(publication_ref) = LOWER('${publication}')`)
 
-  return `${publication} ${start} ${end} ${publicationResult.rows[0].id}`
+  return `${publication} ${start} ${end} ${publicationResult.rows[0].id} test`
 }
