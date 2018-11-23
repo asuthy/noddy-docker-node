@@ -1,9 +1,26 @@
 # A node.js v8 box
 FROM node:8.9
 
+ARG ssh_prv_key
+ARG ssh_pub_key
+
+RUN apt-get update
+RUN apt-get -y install psmisc
+
+# Authorize SSH Host
+RUN mkdir -p /root/.ssh && \
+    chmod 0700 /root/.ssh && \
+    ssh-keyscan bitbucket.org > /root/.ssh/known_hosts
+
+# Add the keys and set permissions
+RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
+    echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && \
+    chmod 600 /root/.ssh/id_rsa && \
+    chmod 600 /root/.ssh/id_rsa.pub
+
 # Copy entrypoint script to container
-COPY ./docker-entrypoint.sh /usr/local/bin
-RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
+COPY ./docker-entrypoint-dev.sh /usr/local/bin
+RUN chmod a+x /usr/local/bin/docker-entrypoint-dev.sh
 
 # Create and define the node_modules's cache directory.
 RUN mkdir /usr/src/cache
@@ -13,6 +30,9 @@ WORKDIR /usr/src/cache
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
+
+RUN rm /root/.ssh/id_rsa
+RUN rm /root/.ssh/id_rsa.pub
 
 # Create and define the application's working directory
 RUN mkdir /usr/src/app
@@ -28,4 +48,4 @@ COPY . .
 EXPOSE 3000 9229
 
 # Copy cached node modules to local volume and start in debug mode
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint-dev.sh"]

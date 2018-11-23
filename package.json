@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "nodemon --inspect=0.0.0.0:9229 src/app.js",
+    "debug": "nodemon --delay 80ms --exec 'fuser -k 9229/tcp; node --inspect=0.0.0.0:9229 src/app.js'",
     "lint": "node_modules/standard/bin/cmd.js --fix --no-verify --verbose | snazzy",
     "lint-check": "node_modules/standard/bin/cmd.js --no-verify --verbose"
   },

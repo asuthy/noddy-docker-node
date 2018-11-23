@@ -2,15 +2,15 @@
 ### node app running in a Docker container connecting to a postgres Docker container with reload on code change and VS Code debugging
 #### Create and run postgres container
 ```console
-docker run -p 5432:5432 --name postgres-10 -e POSTGRES_PASSWORD=postgres -d postgres:10
+docker run -p 5432:5432 --name postgres-10 -e POSTGRES_PASSWORD=postgres -e TZ=UTC -d postgres:10
 ```
 #### Build image
 ```console
-docker build -t noddy:0.0.1 .
+docker build -f Dockerfile.dev --build-arg ssh_prv_key="$(cat ~/.ssh/id_rsa)" --build-arg ssh_pub_key="$(cat ~/.ssh/id_rsa.pub)" --squash -t noddy:0.0.1 .
 ```
 #### Run container with link to postgres-10 container (available internally as postgres)
 ```console
-docker run --name noddy -p 9229:9229 -p 3000:3000 --link postgres-10:postgres -d -v ${PWD}:/usr/src/app noddy:0.0.1
+docker run --name noddy -p 9229:9229 -p 3000:3000 --link postgres-10:postgres -d -v ${PWD}:/usr/src/app:cached noddy:0.0.1
 ```
 #### Attach VS Code debugger from debug menu
 ```console
